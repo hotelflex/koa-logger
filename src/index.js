@@ -25,7 +25,6 @@ module.exports = logger => {
       log.error(
         _.omitBy(
           {
-            environment,
             headers,
             hostname,
             ip,
@@ -47,7 +46,6 @@ module.exports = logger => {
       log.info(
         _.omitBy(
           {
-            environment,
             headers,
             hostname,
             ip,
