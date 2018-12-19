@@ -1,13 +1,12 @@
 const _ = require('lodash')
-const bunyan = require('bunyan')
 const os = require('os')
 const ms = require('ms')
 
 const hostname = os.hostname()
 const resolveIp = ip => (ip.slice(0, 7) === '::ffff:' ? ip.slice(7) : ip)
 
-module.exports = ({ name, environment } = {}) => {
-  const log = bunyan.createLogger({ name })
+module.exports = logger => {
+  const log = logger || console.log
 
   return async (ctx, next) => {
     const headers = _.omit(ctx.request.headers, ['authorization'])
