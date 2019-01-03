@@ -1,16 +1,11 @@
 const _ = require('lodash')
-const os = require('os')
 const ms = require('ms')
 
-const hostname = os.hostname()
-const resolveIp = ip => (ip.slice(0, 7) === '::ffff:' ? ip.slice(7) : ip)
-
 module.exports = logger => {
-  const log = logger || console.log
+  if (!logger) throw Error('Missing logger')
 
   return async (ctx, next) => {
-    const headers = _.omit(ctx.request.headers, ['authorization'])
-    const ip = resolveIp(ctx.request.ip)
+    const headers = ctx.request.headers
 
     const start = Date.now()
 
@@ -26,8 +21,6 @@ module.exports = logger => {
         _.omitBy(
           {
             headers,
-            hostname,
-            ip,
             duration,
             error,
             stack,
@@ -47,8 +40,6 @@ module.exports = logger => {
         _.omitBy(
           {
             headers,
-            hostname,
-            ip,
             duration,
             method: ctx.method,
             path: ctx.path,
