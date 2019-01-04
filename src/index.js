@@ -17,7 +17,7 @@ module.exports = logger => {
     if (ctx.status >= 400) {
       const { error, stack } = ctx.body || {}
 
-      log.error(
+      logger.error(
         _.omitBy(
           {
             headers,
@@ -36,7 +36,7 @@ module.exports = logger => {
         'Request error',
       )
     } else {
-      log.info(
+      logger.info(
         _.omitBy(
           {
             headers,
