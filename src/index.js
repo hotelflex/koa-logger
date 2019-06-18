@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const ms = require('ms')
 
-module.exports = logger => {
+module.exports = (logger, opts={}) => {
   if (!logger) throw Error('Missing logger')
 
   return async (ctx, next) => {
@@ -29,7 +29,7 @@ module.exports = logger => {
             status: ctx.status,
             params: _.isEmpty(ctx.params) ? null : ctx.params,
             query: _.isEmpty(ctx.query) ? null : ctx.query,
-            body: _.isEmpty(ctx.request.body) ? null : ctx.request.body,
+            body: opts.noBody ? null : _.isEmpty(ctx.request.body) ? null : ctx.request.body,
           },
           _.isNil,
         ),
@@ -46,7 +46,7 @@ module.exports = logger => {
             status: ctx.status,
             params: _.isEmpty(ctx.params) ? null : ctx.params,
             query: _.isEmpty(ctx.query) ? null : ctx.query,
-            body: _.isEmpty(ctx.request.body) ? null : ctx.request.body,
+            body: opts.noBody ? null : _.isEmpty(ctx.request.body) ? null : ctx.request.body,
           },
           _.isNil,
         ),
